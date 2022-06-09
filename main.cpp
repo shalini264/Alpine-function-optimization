@@ -1,6 +1,6 @@
 //Optimization of alpine function
-#include <bits/stdc++.h>
-using namespace std;
+#include <bits/stdc++.h>       
+using namespace std;              
 int population[1001][51];
 int getFitnessVal(int i,int d)
 {
@@ -13,6 +13,15 @@ int getFitnessVal(int i,int d)
         result+=temp;
     }
     return result;
+}
+int getDistance(int i,int j,int d)
+{
+    int result=0;
+    for(int k=0;k<d;k++)
+    {
+        result+=((population[i][k]-population[j][k])*(population[i][k]-population[j][k]));
+    }
+    return sqrt(result);
 }
 struct blackHole{
     int position;
@@ -34,7 +43,7 @@ int main() {
          population[i][j] = rand()%100;   
         }
     }
-    //Calculate fitness Value of all candidate solutions and choose bloack hole
+    //Calculate fitness Value of all candidate solutions and choose black hole
     for(int i=0;i<n;i++)
     {   int temp = getFitnessVal(i,d);
         total_fitness+=temp;
@@ -64,7 +73,7 @@ int main() {
               total_fitness=total_fitness+newFitnessVal-temp;
               R=(bh.fitnessVal/total_fitness);}
           else
-          {if(sqrt(sum)<R)
+          {if(getDistance(i,bh.position,d)<R)
           {   
               for(int j=0;j<d;j++)
               {
